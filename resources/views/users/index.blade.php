@@ -26,10 +26,10 @@
           <thead>
             <tr>
                 <th>#</th>
-                <th>User</th>
+                <th>Usuário</th>
                 <th>E-mail</th>
                 <th>Perfil</th>
-                <th width="280px">Action</th>
+                <th width="280px">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -42,14 +42,14 @@
                 <td>
                     <form action="{{ route('users.destroy',$user->id) }}" method="POST">
         
-                        <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
+                        <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Mostrar</a>
         
-                        <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
+                        <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Editar</a>
         
                         @csrf
                         @method('DELETE')
             
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Deletar</button>
                     </form>
                 </td>
             </tr>

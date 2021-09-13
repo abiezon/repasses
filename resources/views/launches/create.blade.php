@@ -40,7 +40,7 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-9">
                     <div class="form-group">
-                        <strong>Description:</strong>
+                        <strong>Descrição:</strong>
                         <input type="text" name="description" class="form-control" placeholder="Descrição" value="{{$launch->description ?? ''}}">
                     </div>
                 </div>
@@ -80,7 +80,7 @@
                 </div>
 
                 <div class="col-xs-12 col-sm-12 col-md-9 text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
         

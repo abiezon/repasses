@@ -40,8 +40,8 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-9">
                     <div class="form-group">
-                        <strong>Description:</strong>
-                        <input type="text" name="description" class="form-control" placeholder="Descrição" value="{{$type_document->description ?? ''}}">
+                        <strong>Nome do Tipo de Documento:</strong>
+                        <input type="text" name="description" class="form-control" placeholder="Informe o nome do Tipo de Documento" value="{{$type_document->description ?? ''}}">
                     </div>
                     <div class="form-group form-check">
                         <input type="checkbox" name="status" class="form-check-input" placeholder="Status" {{@$type_document->status ? 'checked="1"' : 'checked="0"'}}>
@@ -50,7 +50,7 @@
                 </div>
                 
                 <div class="col-xs-12 col-sm-12 col-md-9 text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
         

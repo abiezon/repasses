@@ -27,8 +27,8 @@
           <thead>
             <tr>
                 <th>#</th>
-                <th>Description</th>
-                <th width="280px">Action</th>
+                <th>Nome do Perfil</th>
+                <th width="280px">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -40,13 +40,13 @@
                 <td>
                     <form action="{{ route('roles.destroy',$role->id) }}" method="POST">
         
-                        <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Show</a>        
-                        <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Edit</a>
+                        <a class="btn btn-info" href="{{ route('roles.show',$role->id) }}">Mostrar</a>        
+                        <a class="btn btn-primary" href="{{ route('roles.edit',$role->id) }}">Editar</a>
         
                         @csrf
                         @method('DELETE')
             
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Deletar</button>
                     </form>
                 </td>
             </tr>

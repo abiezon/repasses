@@ -27,10 +27,10 @@
           <thead>
             <tr>
                 <th>#</th>
-                <th>Description</th>
+                <th>Descrição</th>
                 <th>Tipo de Documento</th>
                 <th>Data</th>
-                <th width="280px">Action</th>
+                <th width="280px">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -43,13 +43,13 @@
                 <td>
                     <form action="{{ route('launches.destroy',$launch->id) }}" method="POST">
         
-                        <a class="btn btn-info" href="{{ route('launches.show',$launch->id) }}">Show</a>        
-                        <a class="btn btn-primary" href="{{ route('launches.edit',$launch->id) }}">Edit</a>
+                        <a class="btn btn-info" href="{{ route('launches.show',$launch->id) }}">Mostrar</a>        
+                        <a class="btn btn-primary" href="{{ route('launches.edit',$launch->id) }}">Editar</a>
         
                         @csrf
                         @method('DELETE')
             
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Deletar</button>
                     </form>
                 </td>
             </tr>

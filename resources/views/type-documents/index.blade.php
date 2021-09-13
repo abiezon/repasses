@@ -27,9 +27,9 @@
           <thead>
             <tr>
                 <th>#</th>
-                <th>Description</th>
+                <th>Descrição</th>
                 <th>Status</th>
-                <th width="280px">Action</th>
+                <th width="280px">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -42,13 +42,13 @@
                 <td>
                     <form action="{{ route('type-documents.destroy',$type_document->id) }}" method="POST">
         
-                        <a class="btn btn-info" href="{{ route('type-documents.show',$type_document->id) }}">Show</a>        
-                        <a class="btn btn-primary" href="{{ route('type-documents.edit',$type_document->id) }}">Edit</a>
+                        <!-- <a class="btn btn-info" href="{{ route('type-documents.show',$type_document->id) }}">Mostrar</a>         -->
+                        <a class="btn btn-primary" href="{{ route('type-documents.edit',$type_document->id) }}">Editar</a>
         
                         @csrf
                         @method('DELETE')
             
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Deletar</button>
                     </form>
                 </td>
             </tr>

@@ -28,9 +28,9 @@
             <tr>
                 <th>#</th>
                 <th>Cod. Grupo</th>
-                <th>Description</th>
+                <th>Nome do Grupo</th>
                 <th>Status</th>
-                <th width="280px">Action</th>
+                <th width="280px">Ações</th>
             </tr>
           </thead>
           <tbody>
@@ -44,13 +44,13 @@
                 <td>
                     <form action="{{ route('groups.destroy',$group->id) }}" method="POST">
         
-                        <a class="btn btn-info" href="{{ route('groups.show',$group->id) }}">Show</a>        
-                        <a class="btn btn-primary" href="{{ route('groups.edit',$group->id) }}">Edit</a>
+                        <a class="btn btn-info" href="{{ route('groups.show',$group->id) }}">Mostrar</a>        
+                        <a class="btn btn-primary" href="{{ route('groups.edit',$group->id) }}">Editar</a>
         
                         @csrf
                         @method('DELETE')
             
-                        <button type="submit" class="btn btn-danger">Delete</button>
+                        <button type="submit" class="btn btn-danger">Deletar</button>
                     </form>
                 </td>
             </tr>

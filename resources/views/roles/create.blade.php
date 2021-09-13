@@ -40,13 +40,13 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-9">
                     <div class="form-group">
-                        <strong>Description:</strong>
-                        <input type="text" name="description" class="form-control" placeholder="Role" value="{{$role->description ?? ''}}">
+                        <strong>Nome do Perfil:</strong>
+                        <input type="text" name="description" class="form-control" placeholder="Nome do Perfil" value="{{$role->description ?? ''}}">
                     </div>
                 </div>
                 
                 <div class="col-xs-12 col-sm-12 col-md-9 text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
         

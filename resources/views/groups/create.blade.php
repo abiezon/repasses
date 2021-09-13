@@ -44,8 +44,8 @@
                         <input type="text" name="cod_group" class="form-control" placeholder="Código do Grupo" value="{{$group->cod_group ?? ''}}">
                     </div>
                     <div class="form-group">
-                        <strong>Description:</strong>
-                        <input type="text" name="description" class="form-control" placeholder="Group" value="{{$group->description ?? ''}}">
+                        <strong>Nome do Grupo:</strong>
+                        <input type="text" name="description" class="form-control" placeholder="Nome do Grupo" value="{{$group->description ?? ''}}">
                     </div>
                     <div class="form-group form-check">
                         <input type="checkbox" name="status" class="form-check-input" placeholder="Status" {{@$group->status ? 'checked="1"' : 'checked="0"'}}>
@@ -54,7 +54,7 @@
                 </div>
                 
                 <div class="col-xs-12 col-sm-12 col-md-9 text-center">
-                        <button type="submit" class="btn btn-primary">Submit</button>
+                        <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
         

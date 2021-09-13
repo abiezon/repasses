@@ -45,7 +45,7 @@
           <tr>
             <td>Arquivo:</td>
             <!-- <td><object data="{{ asset($url)}}"></object></td> -->
-            <td><a href="#" target="_blank"><i class="lni lni-download"></i> Baixar Arquivo</a></td>
+            <td><a href="{{ asset($url)}}" target="_blank"><i class="lni lni-download"></i> Baixar Arquivo</a></td>
           </tr>
         </tbody>
       </table>

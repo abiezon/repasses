@@ -96,9 +96,4 @@
         </main>
     </div>
 </body>
-<script type="text/javascript">
-    // $(document).ready(function() {
-        $('select').select2();
-    // });
-</script>
 </html>
