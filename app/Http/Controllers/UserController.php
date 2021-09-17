@@ -47,15 +47,20 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'email' => 'required',
-            'password' => 'required'
+            'email' => 'required|unique:users',
+            'password' => 'required',
+            'photo' => 'required',
+            'role_id' => 'required',
+            'group_id' => 'required'
         ]);
 
         $message = Role::where('id', $request['role_id'])->value('description');    
         
         $message .= ' created succesfully.';
 
-        $path = Storage::putFile('photos', $request->file('photo'));      
+        
+        $path = Storage::putFile('photos', $request->file('photo'));
+        
 
         User::create([
             'name' => $request['name'],

@@ -47,7 +47,8 @@ class LaunchController extends Controller
         $request->validate([
             'description' => 'required',
             'type_document_id' => 'required',
-            'date_document' => 'required'
+            'date_document' => 'required',
+            'doc_file' => 'required'
         ]);
         
         $path = Storage::putFile('files', $request->file('doc_file'));
@@ -85,7 +86,9 @@ class LaunchController extends Controller
      */
     public function edit(Launch $launch)
     {
-        //
+        $type_documents = TypeDocument::all();
+        $users = User::all();
+        return view('launches.create', compact('launch', 'users', 'type_documents'));
     }
 
     /**
@@ -97,7 +100,18 @@ class LaunchController extends Controller
      */
     public function update(Request $request, Launch $launch)
     {
-        //
+        $launch->description = $request->description;
+        $launch->type_document_id = $request->type_document_id;
+        $launch->date_document = $request->date_document;
+
+        if(!empty($request->file('doc_file'))) {
+            $path = Storage::putFile('files', $request->file('doc_file'));
+            $launch->doc_file = $path;
+        }
+
+        $launch->save();  
+        return redirect()->route('launches.index')
+                        ->with('success','Launch updated successfully.');
     }
 
     /**
@@ -108,6 +122,9 @@ class LaunchController extends Controller
      */
     public function destroy(Launch $launch)
     {
-        //
+        $launch->delete();
+
+        return redirect()->route('launches.index')
+                        ->with('success','Launch has deleted successfully.');
     }
 }

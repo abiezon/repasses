@@ -6,7 +6,7 @@
     <div class="col-9 m-auto">
       <div class="col">
           <div class="float-left text-center col-8">
-            <h2>{{isset($group) ? 'Editar' : 'Novo' }} Lançamento</h2>        
+            <h2>{{isset($launch) ? 'Editar' : 'Novo' }} Lançamento</h2>        
           </div>
           <div class="float-right">
             <a class="btn btn-danger" href="{{ route('launches.index') }}"> Voltar</a>
@@ -64,7 +64,7 @@
                 <div class="col-xs-12 col-sm-12 col-md-9">
                     <div class="form-group">
                         <strong>Data do documento:</strong>
-                        <input type="date" class="form-control" name="date_document" placeholder="Data do Documento" value=" @if(isset($launch)){{ date('Y-m-d', strtotime(@$launch->date_document))}}else{{date('Y-m-d')}}@endif"></input>
+                        <input type="date" class="form-control" name="date_document" placeholder="Data do Documento" value="{{$launch->date_document ?? ''}}"></input>
                     </div>
                 </div> 
                 <div class="col-xs-12 col-sm-12 col-md-9">

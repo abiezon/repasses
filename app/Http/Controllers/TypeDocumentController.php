@@ -67,34 +67,42 @@ class TypeDocumentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\TypeDocument  $typeDocument
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(TypeDocument $type_document)
     {
-        //
+        return view('type-documents.create', compact('type_document'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\TypeDocument  $type_document
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, TypeDocument $type_document)
     {
-        //
+        $type_document->description = $request->description;
+        $type_document->status = $request->status == 'on' ? true : false;
+        $type_document->save();
+
+        return redirect()->route('type-documents.index')
+                        ->with('success','Type Document updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\TypeDocument  $type_document
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(TypeDocument $type_document)
     {
-        //
+        $type_document->delete();
+
+        return redirect()->route('type-documents.index')
+                        ->with('success','Type Document has deleted successfully.');
     }
 }

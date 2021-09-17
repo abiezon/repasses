@@ -79,7 +79,11 @@ class RoleController extends Controller
      */
     public function update(Request $request, Role $role)
     {
-        //
+        $role->description = $request->description;
+
+        $role->save();  
+        return redirect()->route('roles.index')
+                        ->with('success','Role updated successfully.');
     }
 
     /**
@@ -90,6 +94,9 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
-        //
+       $role->delete();
+
+       return redirect()->route('roles.index')
+                        ->with('success','Role has deleted successfully.');
     }
 }

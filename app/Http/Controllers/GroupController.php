@@ -64,7 +64,7 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
-        // return view('group.profile', ['user' => User::findOrFail($id)]);
+        return view('groups.show', compact('group'));
     }
 
     /**
@@ -103,6 +103,10 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        //
+        $group->delete();
+
+        return redirect()->route('groups.index')
+                        ->with('success','Group has deleted successfully.');
+
     }
 }
