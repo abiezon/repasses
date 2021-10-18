@@ -3,31 +3,30 @@
 @section('content')
 
 <div class="row">
-    <div class="col-9 m-auto">
-      <div class="col">
-          <div class="float-left text-center col-8">
+    <div class="col-12 m-auto">
+      <div class="row">
+          <div class="col-10">
             <h2>{{isset($group) ? 'Editar' : 'Cadastrar' }} Tipo de Documentos</h2>        
           </div>
-          <div class="float-right">
+          <div class="col-2">
             <a class="btn btn-danger" href="{{ route('type-documents.index') }}"> Voltar</a>
           </div>
       </div>      
   </div>
 </div>
-   
+
+<hr>
+<div class="clearfix"></div> 
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    <div class="row">
+        <div class="col alert alert-danger">
+            <strong>Opa!</strong> Houve alguns problemas com o seu cadastro.
+        </div>
     </div>
-@endif 
+@endif
 
 <div class="row">
-    <div class="col-9 m-auto">
+    <div class="col-12 m-auto">
         @if(isset($type_document))
             <form action="{{ route('type-documents.update', $type_document) }}" method="POST">
             @method('PUT')
@@ -38,10 +37,13 @@
             @csrf
         
             <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-9">
+                <div class="col-12">
                     <div class="form-group">
-                        <strong>Nome do Tipo de Documento:</strong>
+                        <strong>Nome do Tipo de Documento*:</strong>
                         <input type="text" name="description" class="form-control" placeholder="Informe o nome do Tipo de Documento" value="{{$type_document->description ?? ''}}">
+                        @if($errors->has('description'))
+                            <span class="text-danger">*{{ $errors->first('description')}}</span>
+                        @endif
                     </div>
                     <div class="form-group form-check">
                         <input type="checkbox" name="status" class="form-check-input" placeholder="Status" {{@$type_document->status ? 'checked="1"' : 'checked="0"'}}>
@@ -49,7 +51,7 @@
                     </div>
                 </div>
                 
-                <div class="col-xs-12 col-sm-12 col-md-9 text-center">
+                <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </div>

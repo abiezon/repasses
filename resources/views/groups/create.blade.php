@@ -14,15 +14,14 @@
       </div>      
   </div>
 </div>
-   
+
+<hr>
+<div class="clearfix"></div> 
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+    <div class="row">
+        <div class="col alert alert-danger">
+            <strong>Opa!</strong> Houve alguns problemas com o seu cadastro.
+        </div>
     </div>
 @endif 
 
@@ -42,10 +41,16 @@
                     <div class="form-group">
                         <strong>Código Grupo:</strong>
                         <input type="text" name="cod_group" class="form-control" placeholder="Código do Grupo" value="{{$group->cod_group ?? ''}}">
+                        @if($errors->has('cod_group'))
+                            <span class="text-danger">*{{ $errors->first('cod_group')}}</span>
+                        @endif
                     </div>
                     <div class="form-group">
                         <strong>Nome do Grupo:</strong>
                         <input type="text" name="description" class="form-control" placeholder="Nome do Grupo" value="{{$group->description ?? ''}}">
+                        @if($errors->has('description'))
+                            <span class="text-danger">*{{ $errors->first('description')}}</span>
+                        @endif
                     </div>
                     <div class="form-group form-check">
                         <input type="checkbox" name="status" class="form-check-input" placeholder="Status" {{@$group->status ? 'checked="1"' : 'checked="0"'}}>

@@ -45,7 +45,7 @@ class RoleController extends Controller
         Role::create($request->all());
    
         return redirect()->route('roles.index')
-                        ->with('success','Role created successfully.');
+                        ->with('success','Perfil criado com sucesso.');
     }
 
     /**
@@ -83,7 +83,7 @@ class RoleController extends Controller
 
         $role->save();  
         return redirect()->route('roles.index')
-                        ->with('success','Role updated successfully.');
+                        ->with('success','Perfil atualizado com sucesso.');
     }
 
     /**
@@ -97,6 +97,6 @@ class RoleController extends Controller
        $role->delete();
 
        return redirect()->route('roles.index')
-                        ->with('success','Role has deleted successfully.');
+                        ->with('success','Perfil apagado com sucesso.');
     }
 }

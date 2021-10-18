@@ -30,8 +30,12 @@ class LaunchObserver
         $user_list = [];
         foreach ($launchs_users as $key => $launch_user) {
             $user = User::findOrFail($launch_user->user_id);
-            // $launch->name = $user->full_name;
-            Mail::to($user->email)->queue(new LaunchMail($launch));
+
+            try {
+                Mail::to($user->email)->queue(new LaunchMail($launch));
+            } catch (\Throwable $th) {
+                //throw $th;
+            }            
         }
         
     }

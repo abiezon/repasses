@@ -56,7 +56,7 @@ class UserController extends Controller
 
         $message = Role::where('id', $request['role_id'])->value('description');    
         
-        $message .= ' created succesfully.';
+        $message .= ' criado com sucesso.';
 
         
         $path = Storage::putFile('photos', $request->file('photo'));
@@ -129,7 +129,7 @@ class UserController extends Controller
 
         $user->save();  
         return redirect()->route('users.index')
-                        ->with('success','User updated successfully.');
+                        ->with('success','Usuário atualizado com sucesso.');
     }
 
     /**
@@ -143,7 +143,7 @@ class UserController extends Controller
         $user->delete();
 
        return redirect()->route('users.index')
-                        ->with('success','User has deleted successfully.');
+                        ->with('success','Usuário apagado com sucesso.');
     }
 
     /**

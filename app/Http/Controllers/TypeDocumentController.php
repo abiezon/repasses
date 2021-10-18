@@ -50,7 +50,7 @@ class TypeDocumentController extends Controller
         ]);
    
         return redirect()->route('type-documents.index')
-                        ->with('success', 'Type Document created successfully.');
+                        ->with('success', 'Tipo de Documento criado com sucesso.');
     }
 
     /**
@@ -89,7 +89,7 @@ class TypeDocumentController extends Controller
         $type_document->save();
 
         return redirect()->route('type-documents.index')
-                        ->with('success','Type Document updated successfully.');
+                        ->with('success','Tipo de Documento atualizado com sucesso.');
     }
 
     /**
@@ -103,6 +103,6 @@ class TypeDocumentController extends Controller
         $type_document->delete();
 
         return redirect()->route('type-documents.index')
-                        ->with('success','Type Document has deleted successfully.');
+                        ->with('success','Tipo de Documento apagado com sucesso.');
     }
 }

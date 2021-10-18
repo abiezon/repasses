@@ -53,7 +53,7 @@ class GroupController extends Controller
         ]);
    
         return redirect()->route('groups.index')
-                        ->with('success', 'Group created successfully.');
+                        ->with('success', 'Grupo criado com sucesso.');
     }
 
     /**
@@ -92,7 +92,7 @@ class GroupController extends Controller
         $group->status = $request->status == 'on' ? true : false;
         $group->save();  
         return redirect()->route('groups.index')
-                        ->with('success','Group updated successfully.');
+                        ->with('success','Grupo atualizado com sucesso.');
     }
 
     /**
@@ -106,7 +106,7 @@ class GroupController extends Controller
         $group->delete();
 
         return redirect()->route('groups.index')
-                        ->with('success','Group has deleted successfully.');
+                        ->with('success','Grupo apagado com sucesso.');
 
     }
 }

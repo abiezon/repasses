@@ -63,7 +63,7 @@ class LaunchController extends Controller
         $insertUser->users()->attach($request['users']);        
    
         return redirect()->route('launches.index')
-                        ->with('success', 'Launch created successfully.');
+                        ->with('success', 'Lançamento criado com sucesso.');
     }
 
     /**
@@ -111,7 +111,7 @@ class LaunchController extends Controller
 
         $launch->save();  
         return redirect()->route('launches.index')
-                        ->with('success','Launch updated successfully.');
+                        ->with('success','Lançamento editado com sucesso.');
     }
 
     /**
@@ -125,6 +125,6 @@ class LaunchController extends Controller
         $launch->delete();
 
         return redirect()->route('launches.index')
-                        ->with('success','Launch has deleted successfully.');
+                        ->with('success','Lançamento apagado com sucesso.');
     }
 }
