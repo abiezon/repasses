@@ -2,19 +2,7 @@
 
 @section('content')
 
-  <div class="col-12 m-auto">
-      <div class="row">
-          <div class="col-10">
-            <h2 >Cadastro de Tipo de Documentos</h2>         
-          </div>
-          <div class="col-2">
-            <a class="btn btn-danger" href="{{ route('home') }}"> Voltar</a>
-              <a class="btn btn-success" href="{{ route('type-documents.create') }}"> Novo</a>
-          </div>
-      </div>
-  </div>
-  <div class="clearfix"></div>
-  <hr>
+<h2 class="main-title">{{ __('Lista de Tipos de Documentos')}}</h2>
    
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -22,9 +10,8 @@
         </div>
     @endif
    
-    <div class="col">
-      <div class="table-responsive">
-        <table class="table table-striped">
+      <div class="stat-cards-item users-table table-wrapper">
+        <table class="table">
             <thead>
               <tr>
                   <th>#</th>
@@ -42,14 +29,17 @@
                   
                   <td>
                       <form action="{{ route('type-documents.destroy',$type_document->id) }}" method="POST">
-          
-                          <!-- <a class="btn btn-info" href="{{ route('type-documents.show',$type_document->id) }}">Mostrar</a>         -->
-                          <a class="btn btn-primary" href="{{ route('type-documents.edit',$type_document->id) }}">Editar</a>
+       
+                          <a class="btn btn-outline-primary btn-block" href="{{ route('type-documents.edit',$type_document->id) }}">
+                            <i data-feather="edit" aria-hidden="true"></i>
+                          </a>
           
                           @csrf
                           @method('DELETE')
               
-                          <button type="submit" class="btn btn-danger">Deletar</button>
+                          <button type="submit" class="btn btn-outline-danger btn-block">
+                            <i data-feather="trash" aria-hidden="true"></i>
+                          </button>
                       </form>
                   </td>
               </tr>
@@ -57,7 +47,6 @@
             </tbody>
         </table>
       </div>
-    </div>
     {!! $type_documents->links() !!}
     
 @endsection

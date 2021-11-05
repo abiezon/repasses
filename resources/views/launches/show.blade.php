@@ -2,33 +2,17 @@
 
 @section('content')
 
-  <div class="col-12 m-auto">
-      <div class="col">
-          <div class="float-left text-center col-10">
-            <h2>Ver Lançamentos</h2>       
-          </div>
-          <div class="float-right">
-            <a class="btn btn-danger" href="{{ route('home') }}"> Voltar</a>
-            @can('isAdmin')
-              <a class="btn btn-primary" href="{{ route('launches.edit', $launch) }}"> Editar</a>
-            @endcan
-          </div>
-      </div>      
-  </div>
-  <div class="clearfix"></div>
-  <hr>
+<h2 class="main-title">Ver Lançamentos</h2>
+
+
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
             <p>{{ $message }}</p>
         </div>
     @endif
    
-    <div class="clearfix"></div>
-    <div class="col m-auto">
-      <table class="table">
-        <thead class="thead-dark">
-            <th colspan="2">&nbsp;</th>
-        </thead>
+    <div class="stat-cards-item users-table">
+      <table class="table  posts-table">
         <tbody>
           <tr>
             <td>Descrição:</td>
@@ -44,8 +28,7 @@
           </tr>
           <tr>
             <td>Arquivo:</td>
-            <!-- <td><object data="{{ asset($url)}}"></object></td> -->
-            <td><a href="{{ asset($url)}}" target="_blank"><i class="lni lni-download"></i> Baixar Arquivo</a></td>
+            <td><a href="{{ asset($url)}}" target="_blank" class="btn btn-outline-primary btn-block"><i data-feather="download" aria-hidden="true"></i> Download</a></td>
           </tr>
         </tbody>
       </table>

@@ -13,9 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-})->middleware('auth');
+Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::resource('users', 'UserController')->middleware('auth');
 Route::resource('roles', 'RoleController')->middleware('auth');

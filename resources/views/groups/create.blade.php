@@ -1,69 +1,64 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="col-12">
+    
+<h2 class="main-title">{{isset($group) ? 'Editar' : 'Cadastrar' }} Grupo</h2>
 
-<div class="row">
-    <div class="col-9 m-auto">
-      <div class="col">
-          <div class="float-left text-center col-8">
-            <h2>{{isset($group) ? 'Editar' : 'Cadastrar' }} Grupo</h2>        
-          </div>
-          <div class="float-right">
-            <a class="btn btn-danger" href="{{ route('groups.index') }}"> Voltar</a>
-          </div>
-      </div>      
-  </div>
-</div>
-
-<hr>
-<div class="clearfix"></div> 
 @if ($errors->any())
-    <div class="row">
-        <div class="col alert alert-danger">
+        <div class="alert alert-danger" role="alert">
             <strong>Opa!</strong> Houve alguns problemas com o seu cadastro.
         </div>
-    </div>
 @endif 
 
-<div class="row">
-    <div class="col-9 m-auto">
+    
         @if(isset($group))
-            <form action="{{ route('groups.update', $group) }}" method="POST">
+            <form action="{{ route('groups.update', $group) }}" method="POST" class="form">
             @method('PUT')
         @else
-            <form action="{{ route('groups.store') }}" method="POST">
+            <form action="{{ route('groups.store') }}" method="POST" class="form">
         @endif
         
             @csrf
         
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-9">
-                    <div class="form-group">
-                        <strong>Código Grupo:</strong>
-                        <input type="text" name="cod_group" class="form-control" placeholder="Código do Grupo" value="{{$group->cod_group ?? ''}}">
+            <!-- <div class="row"> -->
+                <div class="col-lg-9">
+                    <label class="form-label-wrapper">
+                        <p class="form-label">{{ __('Código Grupo:') }}</p>
+                        <input type="text" class="form-input @error('cod_group') is-invalid @enderror" name="cod_group" value="{{ $group->cod_group ?? old('cod_group') }}" required autofocus>
                         @if($errors->has('cod_group'))
-                            <span class="text-danger">*{{ $errors->first('cod_group')}}</span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>*{{ $errors->first('cod_group')}}</strong>
+                        </span>
                         @endif
-                    </div>
-                    <div class="form-group">
-                        <strong>Nome do Grupo:</strong>
-                        <input type="text" name="description" class="form-control" placeholder="Nome do Grupo" value="{{$group->description ?? ''}}">
+                    </label>
+
+                    <label class="form-label-wrapper">
+                        <p class="form-label">{{ __('Nome do Grupo:') }}</p>
+                        <input type="text" class="form-input @error('description') is-invalid @enderror" name="description" value="{{ $group->description ?? old('description') }}" required>
                         @if($errors->has('description'))
-                            <span class="text-danger">*{{ $errors->first('description')}}</span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>*{{ $errors->first('description')}}</strong>
+                        </span>
                         @endif
-                    </div>
-                    <div class="form-group form-check">
-                        <input type="checkbox" name="status" class="form-check-input" placeholder="Status" {{@$group->status ? 'checked="1"' : 'checked="0"'}}>
-                        <label class="form-check-label"><strong>Ativo:</strong></label>
-                    </div>
+                    </label>
+
+                    <label class="form-checkbox-wrapper">
+                        <input class="form-checkbox" type="checkbox" placeholder="Status" name="status" {{ @$group->status ? 'checked="1"' : 'checked="0"' }}>
+                        <span class="form-checkbox-label">{{ __('Ativo') }}</span>
+                        @if($errors->has('status'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>*{{ $errors->first('status')}}</strong>
+                        </span>
+                        @endif
+                    </label>
                 </div>
                 
-                <div class="col-xs-12 col-sm-12 col-md-9 text-center">
-                        <button type="submit" class="btn btn-primary">Salvar</button>
+                <div class="col-lg-2 col-md-12 text-center">
+                        <button type="submit" class="form-btn primary-default-btn transparent-btn">Salvar</button>
                 </div>
-            </div>
+            <!-- </div> -->
         
         </form>
     </div>
-</div>
 @endsection

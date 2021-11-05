@@ -1,126 +1,134 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="row">
-    <div class="col-12 m-auto">
-      <div class="row">
-          <div class="col-8">
-            <h2>{{isset($user) ? 'Editar' : 'Cadastrar' }} Usuário</h2>        
-          </div>
-          <div class="col-4 text-right">
-            <a class="btn btn-danger" href="{{ route('users.index') }}"> Voltar</a>
-          </div>
-      </div>      
-  </div>
-</div>
 
-<hr>
-<div class="clearfix"></div> 
+<div class="col-12">
+    
+<h2 class="main-title">{{isset($user) ? 'Editar' : 'Cadastrar' }} Usuário</h2>
+
 @if ($errors->any())
-    <div class="row">
-        <div class="col alert alert-danger">
-            <strong>Opa!</strong> Houve alguns problemas com o seu cadastro.
-        </div>
+    <div class="col alert alert-danger">
+        <strong>Opa!</strong> Houve alguns problemas com o seu cadastro.
     </div>
 @endif
    
-<div class="row">
-    <div class="col-12 m-auto">
         @if(isset($user))
-            <form action="{{ route('users.update', $user) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('users.update', $user) }}" method="POST" enctype="multipart/form-data" class="form">
             @method('PUT')
         @else
-            <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('users.store') }}" method="POST" enctype="multipart/form-data" class="form">
         @endif
             @csrf  
             <div class="row">
-                <div class="col-6">
-                    <div class="form-group">
-                        <strong>Name*:</strong>
-                        <input type="text" name="name" class="form-control" placeholder="Name" value="{{$user->name ?? ''}}">
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label-wrapper">
+                        <p class="form-label">{{ __('Nome*:') }}</p>
+                        <input type="text" class="form-input @error('name') is-invalid @enderror" name="name" placeholder="Primeiro nome" value="{{ $user->name ?? old('name') }}" required autofocus>
                         @if($errors->has('name'))
-                            <span class="text-danger">*{{ $errors->first('name')}}</span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>*{{ $errors->first('name')}}</strong>
+                        </span>
                         @endif
-                    </div>
+                    </label>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <strong>Nome Completo:</strong>
-                        <input type="text" name="full_name" class="form-control" placeholder="Nome Completo" value="{{$user->full_name ?? ''}}">
-                    </div>
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label-wrapper">
+                        <p class="form-label">{{ __('Nome Completo*:') }}</p>
+                        <input type="text" class="form-input @error('full_name') is-invalid @enderror" name="full_name" placeholder="Nome completo" value="{{ $user->full_name ?? old('full_name') }}" required autofocus>
+                        @if($errors->has('full_name'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>*{{ $errors->first('full_name')}}</strong>
+                        </span>
+                        @endif
+                    </label>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <strong>E-mail*:</strong>
-                        <input type="email" class="form-control" name="email" placeholder="E-mail" value="{{$user->email ?? ''}}"></input>
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label-wrapper">
+                        <p class="form-label">{{ __('E-mail*:') }}</p>
+                        <input type="email" class="form-input @error('email') is-invalid @enderror" name="email" placeholder="Seu melhor e-mail" value="{{ $user->email ?? old('email') }}" required autofocus>
                         @if($errors->has('email'))
-                            <span class="text-danger">*{{ $errors->first('email')}}</span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>*{{ $errors->first('email')}}</strong>
+                        </span>
                         @endif
-                    </div>
+                    </label>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <strong>Password*:</strong>
-                        <input type="password" class="form-control" name="password" placeholder="Password" value="{{$user->password ?? ''}}"></input>
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label-wrapper">
+                        <p class="form-label">{{ __('Senha*:') }}</p>
+                        <input type="password" class="form-input @error('password') is-invalid @enderror" name="password" placeholder="Informe sua senha" value="{{ $user->password ?? old('password') }}" required autofocus>
                         @if($errors->has('password'))
-                            <span class="text-danger">*{{ $errors->first('password')}}</span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>*{{ $errors->first('password')}}</strong>
+                        </span>
                         @endif
-                    </div>
+                    </label>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <strong>Data de Nascimento:</strong>
-                        <input type="date" class="form-control" name="birth_date" placeholder="Data de Nascimento" value="@if(isset($user)) {{ date('Y-m-d', strtotime($user->birth_date)) ?? ''}}@endif"></input>
-                    </div>
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label-wrapper">
+                        <p class="form-label">{{ __('Data de Nascimento:') }}</p>
+                        <input type="date" class="form-input @error('birth_date') is-invalid @enderror" name="birth_date" placeholder="Data de nascimento" value="{{ date('Y-m-d', strtotime(@$user->birth_date)) ?? old('birth_date') }}">
+                    </label>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <strong>Foto*:</strong>
-                        <input type="file" name="photo" class="form-control" placeholder="Foto" value="{{$user->photo ?? ''}}">
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label-wrapper">
+                        <p class="form-label">{{ __('Foto*:') }}</p>
+                        <input type="file" class="form-input @error('photo') is-invalid @enderror" name="photo" placeholder="Foto" value="{{ $user->photo ?? old('photo') }}" required autofocus>
                         @if($errors->has('photo'))
-                            <span class="text-danger">*{{ $errors->first('photo')}}</span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>*{{ $errors->first('photo')}}</strong>
+                        </span>
                         @endif
-                    </div>
+                    </label>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <strong>Grupo*:</strong>                
-                        <select name="group_id" id="groups" class="form-control">
-                            <option value="" selected></option>
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label-wrapper">
+                        <p class="form-label">{{ __('Grupo*:') }}</p>
+                        <select name="group_id" id="groups" class="form-select" required>
+                            <option value="" selected><-- Selecione uma opção --></option>
                             @foreach ($groups as $group)
                                 <option value="{{$group->id}}" @if(isset($user)){{ ($group->id == $user->group_id) ? 'selected' : '' }}@endif>{{$group->description}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('group_id'))
-                            <span class="text-danger">*{{ $errors->first('group_id')}}</span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>*{{ $errors->first('group_id')}}</strong>
+                        </span>
                         @endif
-                    </div>
+                    </label>
                 </div>
-                <div class="col-6">
-                    <div class="form-group">
-                        <strong>Role*:</strong>                
-                        <select name="role_id" id="roles" class="form-control">
-                            <option value="" selected></option>
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label-wrapper">
+                        <p class="form-label">{{ __('Perfil*:') }}</p>
+                        <select name="role_id" id="roles" class="form-select" required>
+                            <option value="" selected><-- Selecione uma opção --></option>
                             @foreach ($roles as $role)
-                            <option value="{{$role->id}}" @if(isset($user)){{ ($role->id == $user->role_id) ? 'selected' : '' }}@endif>{{$role->description}}</option>
+                                <option value="{{$role->id}}" @if(isset($user)){{ ($role->id == $user->role_id) ? 'selected' : '' }}@endif>{{$role->description}}</option>
                             @endforeach
                         </select>
                         @if($errors->has('role_id'))
-                            <span class="text-danger">*{{ $errors->first('role_id')}}</span>
+                        <span class="invalid-feedback" role="alert">
+                            <strong>*{{ $errors->first('role_id')}}</strong>
+                        </span>
                         @endif
-                    </div>
+                    </label>
                 </div>
-                <div class="col-6">
-                    <div class="form-group form-check">
-                        <input type="checkbox" name="status" class="form-check-input" placeholder="Status" {{@$user->status ? 'checked="1"' : 'checked="0"'}}>
-                        <label class="form-check-label"><strong>Ativo:</strong></label>
-                    </div>
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-checkbox-wrapper">
+                        <input class="form-checkbox" type="checkbox" placeholder="Status" name="status" {{ @$group->status ? 'checked="1"' : 'checked="0"' }}>
+                        <span class="form-checkbox-label">{{ __('Ativo') }}</span>
+                        @if($errors->has('status'))
+                        <span class="invalid-feedback" role="alert">
+                            <strong>*{{ $errors->first('status')}}</strong>
+                        </span>
+                        @endif
+                    </label>
                 </div>
+
                 <div class="col-12 text-center">
                         <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
-            </div>   
+            </div> 
         </form>
-    </div>
 </div>
 @endsection

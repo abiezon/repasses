@@ -6,94 +6,209 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" href="/img/svg/logo.svg" type="image/x-icon">
 
     <title>Repasses</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
     <!-- Styles -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- CSS only -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.lineicons.com/2.0/LineIcons.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
-
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-    
-
+    <!-- CSS only -->
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    Repasses
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+    <div class="layer"></div>
+    @auth
+        <div class="page-flex">
+            <aside class="sidebar">
+                <div class="sidebar-start">
+                    <div class="sidebar-head">
+                        <a href="/" class="logo-wrapper" title="Home">
+                            <span class="sr-only">Home</span>
+                            <!-- <span class="icon logo" aria-hidden="true"></span> -->
+                            <div class="logo-text">
+                                <span class="logo-title">Repasses</span>
+                                <span class="logo-subtitle">Dashboard</span>
+                            </div>
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        
-                        @auth
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                        </a>
+                        <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+                            <span class="sr-only">Toggle menu</span>
+                            <span class="icon menu-toggle" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                    <div class="sidebar-body">
+                        <ul class="sidebar-body-menu">
+                            <li>
+                                <a class="active" href="/"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+                            </li>
+                            <li>
+                                <a class="show-cat-btn" href="##">
+                                    <span class="icon folder" aria-hidden="true"></span>Grupos
+                                    <span class="category__btn transparent-btn" title="Open list">
+                                        <span class="sr-only">Open list</span>
+                                        <span class="icon arrow-down" aria-hidden="true"></span>
+                                    </span>
                                 </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="/users/{{Auth::user()->id}}">Meu Perfil</a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
+                                <ul class="cat-sub-menu">
+                                    <li>
+                                        <a href="{{ route('groups.index') }}">Listar Todos</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('groups.create') }}">Adicionar Novo</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="show-cat-btn" href="##">
+                                    <span class="icon paper" aria-hidden="true"></span>Tipo Documentos
+                                    <span class="category__btn transparent-btn" title="Open list">
+                                        <span class="sr-only">Open list</span>
+                                        <span class="icon arrow-down" aria-hidden="true"></span>
+                                    </span>
+                                </a>
+                                <ul class="cat-sub-menu">
+                                    <li>
+                                        <a href="{{ route('type-documents.index') }}">Listar Todos</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('type-documents.create') }}">Adicionar Novo</a>
+                                    </li>
+                                </ul>
+                            </li>
+                        
+                            <li>
+                                <a class="show-cat-btn" href="##">
+                                    <span class="icon edit" aria-hidden="true"></span>Lançamentos
+                                    <span class="category__btn transparent-btn" title="Open list">
+                                        <span class="sr-only">Open list</span>
+                                        <span class="icon arrow-down" aria-hidden="true"></span>
+                                    </span>
+                                </a>
+                                <ul class="cat-sub-menu">
+                                    <li>
+                                        <a href="{{ route('launches.index') }}">Listar Todos</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('launches.create') }}">Adicionar Novo</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="show-cat-btn" href="##">
+                                    <span class="icon category" aria-hidden="true"></span>Perfis
+                                    <span class="category__btn transparent-btn" title="Open list">
+                                        <span class="sr-only">Open list</span>
+                                        <span class="icon arrow-down" aria-hidden="true"></span>
+                                    </span>
+                                </a>
+                                <ul class="cat-sub-menu">
+                                    <li>
+                                        <a href="{{ route('roles.index') }}">Listar Todos</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('roles.create') }}">Adicionar Novo</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a class="show-cat-btn" href="##">
+                                    <span class="icon user-3" aria-hidden="true"></span>Usuários
+                                    <span class="category__btn transparent-btn" title="Open list">
+                                        <span class="sr-only">Open list</span>
+                                        <span class="icon arrow-down" aria-hidden="true"></span>
+                                    </span>
+                                </a>
+                                <ul class="cat-sub-menu">
+                                    <li>
+                                        <a href="{{ route('users.index') }}">Listar Todos</a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ route('users.create') }}">Adicionar Novo</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="##"><span class="icon setting" aria-hidden="true"></span>{{ __('Configurações') }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </aside>
+            <div class="main-wrapper">
+                <!-- ! Main nav -->
+                <nav class="main-nav--bg">
+                    <div class="container main-nav">
+                        <div class="main-nav-start"></div>
+                        <div class="main-nav-end">
+                            <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+                                <span class="sr-only">Toggle menu</span>
+                                <span class="icon menu-toggle--gray" aria-hidden="true"></span>
+                            </button>
+                            <div class="lang-switcher-wrapper"></div>
+                            <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
+                                <span class="sr-only">Switch theme</span>
+                                <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
+                                <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
+                            </button>
+                            <div class="notification-wrapper"></div>
+                            <div class="nav-user-wrapper">
+                            <button href="##" class="nav-user-btn dropdown-btn" title="My profile" type="button">
+                                <span class="sr-only">My profile</span>
+                                <span class="nav-user-img">
+                                    <picture><source srcset="/img/avatar/avatar-illustrated-02.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-02.png" alt="User name"></picture>
+                                </span>
+                            </button>
+                            <ul class="users-item-dropdown nav-user-dropdown dropdown">
+                                <li><a href="/users/{{Auth::user()->id}}">
+                                    <i data-feather="user" aria-hidden="true"></i>
+                                    <span>{{ __('Perfil') }}</span>
+                                    </a>
+                                </li>
+                                <li><a href="##">
+                                    <i data-feather="settings" aria-hidden="true"></i>
+                                    <span>{{ __('Configurações') }}</span>
+                                    </a>
+                                </li>
+                                <li><a class="danger" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                    <i data-feather="log-out" aria-hidden="true"></i>
+                                    <span>{{ __('Sair') }}</span>
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
                                     </form>
-                                </div>
-                            </li>
-                        @endauth
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
-            
-            @auth
-            <div class="container-fluid">
-                <div class="row justify-content-center">
-                    <div class="col-md-12">
-                        <div class="card">
-                            <div class="card-header">Olá, {{Auth::user()->name}}!</div>
-
-                            <div class="card-body">
-                                @yield('content')
-                            </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                </div>
+                </nav>
+                <!-- ! Main -->
+                <main class="main users chart-page" id="skip-target">
+                    <div class="container">
+                        @yield('content')
+                    </div>
+                </main>
+                <!-- ! Footer -->
+                <footer class="footer">
+                    <div class="container footer--flex">
+                        <div class="footer-start">
+                            <p>2021 © Repasses</p>
+                        </div>
+                    </div>
+                </footer>
             </div>
-            @else
-                @yield('content')
-            @endauth
-        </main>
-    </div>
+        </div>
+    @else
+        @yield('content')
+    @endauth
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="/plugins/chart.min.js"></script>
+    <!-- Icons library -->
+    <script src="/plugins/feather.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="/js/script.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>
 </html>
