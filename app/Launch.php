@@ -31,6 +31,6 @@ class Launch extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'launches_users', 'launch_id', 'user_id')->withTimestamps();
+        return $this->belongsToMany('App\User', 'launches_users', 'launch_id', 'user_id')->withTimestamps();
     }
 }

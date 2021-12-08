@@ -72,20 +72,21 @@
 
             <div class="col-md-6 col-xl-4">
                 <article class="stat-cards-item">
-                    <div class="stat-cards-icon success">
-                        <i data-feather="activity" aria-hidden="true"></i>
+                    <div class="stat-cards-icon primary">
+                    <i data-feather="file-text" aria-hidden="true"></i>
                     </div>
                     <div class="stat-cards-info">
-                        <p class="stat-cards-info__num">{{ __('Lançamentos') }}</p>
-                        <p class="stat-cards-info__title">{{ __('Lançamentos no Portal') }}</p>
-                        <p class="stat-cards-info__progress">
-                            <span class="stat-cards-info__profit success">
-                                <i data-feather="bar-chart" aria-hidden="true"></i>{{ $launches }}
-                            </span>
-                            <a class="btn btn-outline-primary btn-sm btn-block" href="{{ route('launches.index') }}">
-                                <i class='lni lni-write'></i>{{ __('Ver Mais') }}
-                            </a>
-                        </p>
+                    <p class="stat-cards-info__num">{{ __('Tipo Documentos') }}</p>
+                    <p class="stat-cards-info__title">{{ __('Tipos de Documentos Disponíveis') }}</p>
+                    <p class="stat-cards-info__progress">
+                        <span class="stat-cards-info__profit success">
+                        <i data-feather="bar-chart" aria-hidden="true"></i>{{ $type_documents }}
+                        </span>
+                        <a class="btn btn-outline-primary btn-sm btn-block" href="{{ route('type-documents.index') }}">
+                            <i class='lni lni-notepad'></i>
+                            {{ __('Ver Mais') }}
+                        </a>
+                    </p>
                     </div>
                 </article>
             </div>
@@ -93,22 +94,21 @@
         
         <div class="col-md-6 col-xl-4">
             <article class="stat-cards-item">
-              <div class="stat-cards-icon primary">
-                <i data-feather="file-text" aria-hidden="true"></i>
-              </div>
-              <div class="stat-cards-info">
-                <p class="stat-cards-info__num">{{ __('Tipo Documentos') }}</p>
-                <p class="stat-cards-info__title">{{ __('Tipos de Documentos Disponíveis') }}</p>
-                <p class="stat-cards-info__progress">
-                  <span class="stat-cards-info__profit success">
-                    <i data-feather="bar-chart" aria-hidden="true"></i>{{ $type_documents }}
-                  </span>
-                    <a class="btn btn-outline-primary btn-sm btn-block" href="{{ route('type-documents.index') }}">
-                        <i class='lni lni-notepad'></i>
-                        {{ __('Ver Mais') }}
-                    </a>
-                </p>
-              </div>
+                <div class="stat-cards-icon success">
+                    <i data-feather="activity" aria-hidden="true"></i>
+                </div>
+                <div class="stat-cards-info">
+                    <p class="stat-cards-info__num">{{ __('Lançamentos') }}</p>
+                    <p class="stat-cards-info__title">{{ __('Lançamentos no Portal') }}</p>
+                    <p class="stat-cards-info__progress">
+                        <span class="stat-cards-info__profit success">
+                            <i data-feather="bar-chart" aria-hidden="true"></i>{{ $launches }}
+                        </span>
+                        <a class="btn btn-outline-primary btn-sm btn-block" href="{{ route('launches.index') }}">
+                            <i class='lni lni-write'></i>{{ __('Ver Mais') }}
+                        </a>
+                    </p>
+                </div>
             </article>
         </div>
 

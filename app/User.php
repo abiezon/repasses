@@ -67,7 +67,7 @@ class User extends Authenticatable
 
     public function launches()
     {
-        return $this->belongsToMany(Launch::class, 'launches_users', 'user_id', 'launch_id');
+        return $this->belongsToMany('App\Launch');
     }
 
     public function teachers()

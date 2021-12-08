@@ -17,8 +17,14 @@ class LaunchController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $launchs = Launch::latest()->paginate(5);
+    { 
+        if (\Auth::user()->role_id == 1) {
+            $launchs = Launch::latest()->paginate(5);
+        } else {
+            $user_id = \Auth::user()->id;
+            $lauchnsUsers = LaunchUser::where('user_id', $user_id)->pluck('launch_id')->toArray();
+            $launchs = Launch::whereIn('id', $lauchnsUsers)->paginate(5);
+        }        
   
         return view('launches.index',compact('launchs'))
             ->with('i', (request()->input('page', 1) - 1) * 5);

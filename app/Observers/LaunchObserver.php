@@ -14,7 +14,7 @@ class LaunchObserver
 
     public function created(Launch $launch)
     {
-        $this->sendEmail($launch);
+       $this->sendEmail($launch);
     }
 
     public function updated(Launch $launch)
@@ -34,7 +34,7 @@ class LaunchObserver
             try {
                 Mail::to($user->email)->queue(new LaunchMail($launch));
             } catch (\Throwable $th) {
-                //throw $th;
+                return;
             }            
         }
         

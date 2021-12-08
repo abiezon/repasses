@@ -33,7 +33,9 @@
 
                           <a class="btn btn-outline-secondary btn-block" href="{{ route('launches.show',$launch->id) }}">
                             <i data-feather="eye" aria-hidden="true"></i>
-                          </a>        
+                          </a> 
+                          
+                          @can('isAdmin')
                           <a class="btn btn-outline-primary btn-block" href="{{ route('launches.edit',$launch->id) }}">
                             <i data-feather="edit" aria-hidden="true"></i>
                           </a>
@@ -44,6 +46,7 @@
                           <button type="submit" class="btn btn-outline-danger btn-block">
                             <i data-feather="trash" aria-hidden="true"></i>
                           </button>
+                          @endcan
                       </form>
                   </td>
               </tr>

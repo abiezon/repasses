@@ -40,6 +40,7 @@
                             <li>
                                 <a class="active" href="/"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
                             </li>
+                            @can('isAdmin')
                             <li>
                                 <a class="show-cat-btn" href="##">
                                     <span class="icon folder" aria-hidden="true"></span>Grupos
@@ -74,6 +75,7 @@
                                     </li>
                                 </ul>
                             </li>
+                            @endcan
                         
                             <li>
                                 <a class="show-cat-btn" href="##">
@@ -87,11 +89,14 @@
                                     <li>
                                         <a href="{{ route('launches.index') }}">Listar Todos</a>
                                     </li>
+                                    @can('isAdmin')
                                     <li>
                                         <a href="{{ route('launches.create') }}">Adicionar Novo</a>
                                     </li>
+                                    @endcan
                                 </ul>
                             </li>
+                            @can('isAdmin')
                             <li>
                                 <a class="show-cat-btn" href="##">
                                     <span class="icon category" aria-hidden="true"></span>Perfis
@@ -129,6 +134,7 @@
                             <li>
                                 <a href="##"><span class="icon setting" aria-hidden="true"></span>{{ __('Configurações') }}</a>
                             </li>
+                            @endcan
                         </ul>
                     </div>
                 </div>
