@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class RoleController extends Controller
 {
@@ -113,7 +114,7 @@ class RoleController extends Controller
         if (!Gate::allows('isSuperAdmin')) {
             return abort('403');
         }
-        
+
        $role->delete();
 
        return redirect()->route('roles.index')

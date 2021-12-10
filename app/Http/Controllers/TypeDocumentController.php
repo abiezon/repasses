@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\TypeDocument;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class TypeDocumentController extends Controller
 {
@@ -35,7 +35,7 @@ class TypeDocumentController extends Controller
         if (!Gate::allows('isAdmin')) {
             return abort('403');
         }
-        
+
         return view('type-documents.create');
     }
 

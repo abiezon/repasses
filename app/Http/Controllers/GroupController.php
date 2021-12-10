@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Group;
 use App\User;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class GroupController extends Controller
 {
@@ -122,7 +122,7 @@ class GroupController extends Controller
         if (!Gate::allows('isAdmin')) {
             return abort('403');
         }
-        
+
         $group->delete();
 
         return redirect()->route('groups.index')
