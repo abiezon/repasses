@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -19,8 +20,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::latest()->paginate(5);
-  
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
+        if (Gate::allows('isSuperAdmin')) {
+            $users = User::latest()->paginate(5);
+        } else {
+            $roles = Role::where('description', '<>', 'Root')->pluck('id')->toArray();
+            $users = User::whereIn('id', $roles)->paginate(5);
+        }
+
         return view('users.index',compact('users'))
             ->with('i', (request()->input('page', 1) - 1) * 5);
     }
@@ -32,8 +42,18 @@ class UserController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
         $groups = Group::all();
-        $roles = Role::all();
+
+        if (Gate::allows('isSuperAdmin')) {
+            $roles = Role::all();
+        } else {
+            $roles = Role::where('description', '<>', 'Root')->get();
+        }
+        
         return view('users.create', compact('roles', 'groups'));
     }
 
@@ -98,9 +118,19 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
         $groups = Group::all();
-        $roles = Role::all();
-        return view('users.create', compact('roles', 'groups', 'user'));
+        if (Gate::allows('isSuperAdmin')) {
+            $roles = Role::all();
+        } else {
+            $roles = Role::where('description', '<>', 'Root')->get();
+        }
+        $url = Storage::url($user->photo);
+
+        return view('users.create', compact('roles', 'groups', 'user', 'url'));
     }
 
     /**
@@ -140,6 +170,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+        
         $user->delete();
 
        return redirect()->route('users.index')

@@ -6,8 +6,10 @@ use App\Launch;
 use App\TypeDocument;
 use App\LaunchUser;
 use App\User;
+use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Gate;
 
 class LaunchController extends Controller
 {
@@ -18,7 +20,7 @@ class LaunchController extends Controller
      */
     public function index()
     { 
-        if (\Auth::user()->role_id == 1) {
+        if (Gate::allows('isAdmin')) {
             $launchs = Launch::latest()->paginate(5);
         } else {
             $user_id = \Auth::user()->id;
@@ -37,8 +39,13 @@ class LaunchController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
         $type_documents = TypeDocument::all();
-        $users = User::all();
+        $role_ids = Role::where('description', '<>', 'Root')->pluck('id')->toArray();
+        $users = User::whereIn('id', $role_ids)->get();
         return view('launches.create', compact('type_documents', 'users'));
     }
 
@@ -92,9 +99,16 @@ class LaunchController extends Controller
      */
     public function edit(Launch $launch)
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
         $type_documents = TypeDocument::all();
-        $users = User::all();
-        return view('launches.create', compact('launch', 'users', 'type_documents'));
+        $role_ids = Role::where('description', '<>', 'Root')->pluck('id')->toArray();
+        $users = User::whereIn('id', $role_ids)->get();
+        $url = Storage::url($launch->doc_file);
+
+        return view('launches.create', compact('launch', 'users', 'type_documents', 'url'));
     }
 
     /**
@@ -128,6 +142,9 @@ class LaunchController extends Controller
      */
     public function destroy(Launch $launch)
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
         $launch->delete();
 
         return redirect()->route('launches.index')

@@ -15,7 +15,7 @@
       <table class="table  posts-table">
         <tbody>
           <tr>
-            <td>Descrição:</td>
+            <td>Título:</td>
             <td>{{ $launch->description }}</td>
           </tr>
           <tr>

@@ -73,13 +73,20 @@
                 <div class="col-lg-6 col-md-12">
                     <label class="form-label-wrapper">
                         <p class="form-label">{{ __('Foto*:') }}</p>
-                        <input type="file" class="form-input @error('photo') is-invalid @enderror" name="photo" placeholder="Foto" value="{{ $user->photo ?? old('photo') }}" required autofocus>
+                        <input type="file" class="form-input @error('photo') is-invalid @enderror" name="photo" placeholder="Foto" value="{{ $user->photo ?? old('photo') }}" {{$user->photo ?? 'required'}} autofocus>
                         @if($errors->has('photo'))
                         <span class="invalid-feedback" role="alert">
                             <strong>*{{ $errors->first('photo')}}</strong>
                         </span>
                         @endif
                     </label>
+                    @if(isset($user->photo))
+                        <span class="nav-user-img">
+                            <label for="">Foto atual
+                                <picture><source srcset="{{ asset($url)}}" type="image/webp"><img src="{{ asset($url)}}" alt="User name" class="rounded-circle" width='30%'></picture>
+                            </label>
+                        </span>
+                    @endif
                 </div>
                 <div class="col-lg-6 col-md-12">
                     <label class="form-label-wrapper">

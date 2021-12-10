@@ -14,6 +14,10 @@ class RoleController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows('isSuperAdmin')) {
+            return abort('403');
+        }
+
         $roles = Role::latest()->paginate(5);
   
         return view('roles.index',compact('roles'))
@@ -27,6 +31,10 @@ class RoleController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows('isSuperAdmin')) {
+            return abort('403');
+        }
+
         return view('roles.create');
     }
 
@@ -56,6 +64,10 @@ class RoleController extends Controller
      */
     public function show(Role $role)
     {
+        if (!Gate::allows('isSuperAdmin')) {
+            return abort('403');
+        }
+
         return view('roles.show', compact('role'));
     }
 
@@ -67,6 +79,10 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
+        if (!Gate::allows('isSuperAdmin')) {
+            return abort('403');
+        }
+
         return view('roles.create', compact('role'));
     }
 
@@ -94,6 +110,10 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        if (!Gate::allows('isSuperAdmin')) {
+            return abort('403');
+        }
+        
        $role->delete();
 
        return redirect()->route('roles.index')

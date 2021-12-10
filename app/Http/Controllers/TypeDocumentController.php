@@ -15,6 +15,10 @@ class TypeDocumentController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
         $type_documents = TypeDocument::latest()->paginate(5);
   
         return view('type-documents.index',compact('type_documents'))
@@ -28,6 +32,10 @@ class TypeDocumentController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+        
         return view('type-documents.create');
     }
 
@@ -72,6 +80,10 @@ class TypeDocumentController extends Controller
      */
     public function edit(TypeDocument $type_document)
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
         return view('type-documents.create', compact('type_document'));
     }
 
@@ -100,6 +112,10 @@ class TypeDocumentController extends Controller
      */
     public function destroy(TypeDocument $type_document)
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
         $type_document->delete();
 
         return redirect()->route('type-documents.index')

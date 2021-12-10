@@ -30,6 +30,7 @@
                     </div>
                 </article>
             </div>
+            @can('isSuperAdmin')
             <div class="col-md-6 col-xl-4">
                 <article class="stat-cards-item">
                     <div class="stat-cards-icon warning">
@@ -49,6 +50,7 @@
                     </div>
                 </article>
             </div>
+            @endcan
 
             <div class="col-md-6 col-xl-4">
                 <article class="stat-cards-item">

@@ -16,22 +16,21 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@index')->name('home')->middleware('auth');
 
 Route::resource('users', 'UserController')->middleware('auth');
-Route::resource('roles', 'RoleController')->middleware('auth');
+Route::resource('roles', 'RoleController')->middleware('can:isSuperAdmin');
+Route::resource('groups', 'GroupController')->middleware('can:isAdmin');
+Route::resource('type-documents', 'TypeDocumentController')->middleware('can:isAdmin');
+Route::resource('launches', 'LaunchController')->middleware('auth');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
-Route::get('/teachers', 'UserController@teachers')->name('teachers');
-Route::get('/students', 'UserController@students')->name('students');
-// Route::get('/roles', 'UserController@index')->name('users');
 
-Route::resource('classrooms', 'ClassroomController')->middleware('auth');
-Route::resource('groups', 'GroupController')->middleware('auth');
-Route::resource('type-documents', 'TypeDocumentController')->middleware('auth');
-Route::resource('launches', 'LaunchController')->middleware('auth');
-Route::get('/classroom-students/{id}', 'ClassroomUserController@students')->name('classroom-students')->middleware('auth');
-Route::resource('classroom-user', 'ClassroomUserController')->middleware('auth');
-Route::get('/classroom-subjects/{id}', 'ClassroomController@subjects')->name('classroom-subjects')->middleware('auth');
-Route::post('add-subjects', 'ClassroomController@add_subjects')->name('add-subjects')->middleware('auth');
-Route::get('/school-report/{id}', 'GradeController@school_report')->name('school-report')->middleware('auth');
-Route::get('/my-rooms/{id}', 'ClassroomController@my_rooms')->name('my-rooms')->middleware('auth');
-Route::get('/my-schedule/{id}', 'ScheduleController@my_schedule')->name('my-schedule')->middleware('auth');
+Route::get('/users/create', 'UserController@create')->middleware('can:isAdmin')->name('users.create');
+Route::get('/users', 'UserController@index')->middleware('can:isAdmin')->name('users.index');
+Route::get('/users/{id}', 'UserController@show')->middleware('auth')->name('users.show');
+// Route::get('/launches', 'LaunchController@index')->middleware('auth')->name('launches.index');
+// Route::get('/launches/{id}', 'LaunchController@show')->middleware('auth')->name('launches.show');
+// Route::get('/launches/edit/{id}', 'LaunchController@edit')->middleware('can:isSuperAdmin')->name('launches.edit');
+// Route::get('/launches/create', 'LaunchController@create')->middleware('can:isAdmin')->name('launches.create');
+// Route::get('/launches/destroy', 'LaunchController@destroy')->middleware('can:isAdmin')->name('launches.destroy');
+
+

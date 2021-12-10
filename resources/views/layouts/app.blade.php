@@ -96,7 +96,7 @@
                                     @endcan
                                 </ul>
                             </li>
-                            @can('isAdmin')
+                            @can('isSuperAdmin')
                             <li>
                                 <a class="show-cat-btn" href="##">
                                     <span class="icon category" aria-hidden="true"></span>Perfis
@@ -108,12 +108,15 @@
                                 <ul class="cat-sub-menu">
                                     <li>
                                         <a href="{{ route('roles.index') }}">Listar Todos</a>
-                                    </li>
+                                    </li>                                    
                                     <li>
                                         <a href="{{ route('roles.create') }}">Adicionar Novo</a>
                                     </li>
+                                    
                                 </ul>
                             </li>
+                            @endcan
+                            @can('isAdmin')
                             <li>
                                 <a class="show-cat-btn" href="##">
                                     <span class="icon user-3" aria-hidden="true"></span>Usuários
@@ -131,6 +134,8 @@
                                     </li>
                                 </ul>
                             </li>
+                            @endcan
+                            @can('isSuperAdmin')
                             <li>
                                 <a href="##"><span class="icon setting" aria-hidden="true"></span>{{ __('Configurações') }}</a>
                             </li>
@@ -143,22 +148,24 @@
                 <!-- ! Main nav -->
                 <nav class="main-nav--bg">
                     <div class="container main-nav">
-                        <div class="main-nav-start"></div>
+                        <div class="main-nav-start">
+                            <h4 class="main-title">Olá {{Auth::user()->name}}</h4>
+                        </div>
                         <div class="main-nav-end">
                             <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
                                 <span class="sr-only">Toggle menu</span>
                                 <span class="icon menu-toggle--gray" aria-hidden="true"></span>
                             </button>
                             <div class="lang-switcher-wrapper"></div>
-                            <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
-                                <span class="sr-only">Switch theme</span>
+                            <button class="theme-switcher gray-circle-btn" type="button" title="Trocar Tema">
+                                <span class="sr-only">Trocar Tema</span>
                                 <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
                                 <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
                             </button>
                             <div class="notification-wrapper"></div>
                             <div class="nav-user-wrapper">
-                            <button href="##" class="nav-user-btn dropdown-btn" title="My profile" type="button">
-                                <span class="sr-only">My profile</span>
+                            <button href="##" class="nav-user-btn dropdown-btn" title="{{Auth::user()->name}}" type="button">
+                                <span class="sr-only">{{Auth::user()->name}}</span>
                                 <span class="nav-user-img">
                                     <picture><source srcset="/img/avatar/avatar-illustrated-02.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-02.png" alt="User name"></picture>
                                 </span>
@@ -169,11 +176,13 @@
                                     <span>{{ __('Perfil') }}</span>
                                     </a>
                                 </li>
+                                @can('isSuperAdmin')
                                 <li><a href="##">
                                     <i data-feather="settings" aria-hidden="true"></i>
                                     <span>{{ __('Configurações') }}</span>
                                     </a>
                                 </li>
+                                @endcan
                                 <li><a class="danger" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     <i data-feather="log-out" aria-hidden="true"></i>

@@ -77,4 +77,16 @@ class User extends Authenticatable
 
         dd($users);
     }
+
+    public function greeting()
+    {
+        date_default_timezone_set('America/Sao_Paulo');
+	    $hora = date('H');
+        if( $hora >= 6 && $hora <= 12 )
+            return 'Bom dia';
+        else if ( $hora > 12 && $hora <=18  )
+            return 'Boa tarde';
+        else
+            return 'Boa noite';
+    }
 }

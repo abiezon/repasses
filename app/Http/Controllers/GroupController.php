@@ -16,6 +16,10 @@ class GroupController extends Controller
      */
     public function index()
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
         $groups = Group::latest()->paginate(5);
   
         return view('groups.index',compact('groups'))
@@ -29,6 +33,10 @@ class GroupController extends Controller
      */
     public function create()
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
         return view('groups.create');
     }
 
@@ -64,6 +72,10 @@ class GroupController extends Controller
      */
     public function show(Group $group)
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
         return view('groups.show', compact('group'));
     }
 
@@ -75,6 +87,10 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+
         return view('groups.create', compact('group'));
     }
 
@@ -103,6 +119,10 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
+        if (!Gate::allows('isAdmin')) {
+            return abort('403');
+        }
+        
         $group->delete();
 
         return redirect()->route('groups.index')

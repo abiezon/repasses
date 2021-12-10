@@ -15,7 +15,7 @@
             <thead>
               <tr>
                   <th>#</th>
-                  <th>Descrição</th>
+                  <th>Título</th>
                   <th>Tipo de Documento</th>
                   <th>Data</th>
                   <th width="280px">Ações</th>

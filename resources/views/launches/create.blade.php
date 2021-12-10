@@ -26,7 +26,7 @@
             <div class="row">
                 <div class="col-lg-6 col-md-12">
                     <label class="form-label-wrapper">
-                        <p class="form-label">{{ __('Descrição*:') }}</p>
+                        <p class="form-label">{{ __('Título*:') }}</p>
                         <input type="text" class="form-input @error('description') is-invalid @enderror" name="description" placeholder="Descrição" value="{{ $launch->description ?? old('description') }}" required autofocus>
                         @if($errors->has('description'))
                         <span class="invalid-feedback" role="alert">
@@ -56,13 +56,16 @@
                 <div class="col-lg-6 col-md-12">
                     <label class="form-label-wrapper">
                         <p class="form-label">{{ __('Arquivo*:') }}</p>
-                        <input type="file" class="form-input @error('doc_file') is-invalid @enderror" name="doc_file" placeholder="Arquivo" value="{{ $launch->doc_file ?? old('doc_file') }}" required autofocus>
+                        <input type="file" class="form-input @error('doc_file') is-invalid @enderror" name="doc_file" placeholder="Arquivo" value="{{ $launch->doc_file ?? old('doc_file') }}" {{$launch->doc_file ?? 'required' }} autofocus>
                         @if($errors->has('doc_file'))
                         <span class="invalid-feedback" role="alert">
                             <strong>*{{ $errors->first('doc_file')}}</strong>
                         </span>
                         @endif
                     </label>
+                    @if(isset($launch->doc_file))
+                        <a href="{{ asset($url)}}" target="_blank" class="btn btn-outline-primary btn-block"><i data-feather="download" aria-hidden="true"></i> Download</a>
+                    @endif
                 </div>
 
                 <div class="col-lg-6 col-md-12">
