@@ -28,7 +28,7 @@ class UserController extends Controller
             $users = User::latest()->paginate(5);
         } else {
             $roles = Role::where('description', '<>', 'Root')->pluck('id')->toArray();
-            $users = User::whereIn('id', $roles)->paginate(5);
+            $users = User::whereIn('role_id', $roles)->paginate(5);
         }
 
         return view('users.index',compact('users'))
@@ -173,7 +173,7 @@ class UserController extends Controller
         if (!Gate::allows('isAdmin')) {
             return abort('403');
         }
-        
+
         $user->delete();
 
        return redirect()->route('users.index')

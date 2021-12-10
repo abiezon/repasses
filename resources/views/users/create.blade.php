@@ -83,7 +83,7 @@
                     @if(isset($user->photo))
                         <span class="nav-user-img">
                             <label for="">Foto atual
-                                <picture><source srcset="{{ asset($url)}}" type="image/webp"><img src="{{ asset($url)}}" alt="User name" class="rounded-circle" width='30%'></picture>
+                                <picture><source srcset="{{ asset($url)}}" type="image/webp"><img src="{{ asset($url)}}" alt="User name" class="rounded-circle" width='30'></picture>
                             </label>
                         </span>
                     @endif

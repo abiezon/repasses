@@ -45,7 +45,7 @@ class LaunchController extends Controller
 
         $type_documents = TypeDocument::all();
         $role_ids = Role::where('description', '<>', 'Root')->pluck('id')->toArray();
-        $users = User::whereIn('id', $role_ids)->get();
+        $users = User::whereIn('role_id', $role_ids)->get();
         return view('launches.create', compact('type_documents', 'users'));
     }
 
@@ -105,7 +105,7 @@ class LaunchController extends Controller
 
         $type_documents = TypeDocument::all();
         $role_ids = Role::where('description', '<>', 'Root')->pluck('id')->toArray();
-        $users = User::whereIn('id', $role_ids)->get();
+        $users = User::whereIn('role_id', $role_ids)->get();
         $url = Storage::url($launch->doc_file);
 
         return view('launches.create', compact('launch', 'users', 'type_documents', 'url'));
