@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Launch;
 use App\TypeDocument;
 use App\LaunchUser;
+use App\LaunchGroup;
 use App\User;
 use App\Role;
+use App\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Gate;
@@ -18,18 +20,64 @@ class LaunchController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     { 
         if (Gate::allows('isAdmin')) {
-            $launchs = Launch::latest()->paginate(5);
+            $type_document_ids = null;
+            $dt_init = null;
+            $dt_end = null;
+
+            if ($request->has('search_type')) {
+                $type_document_ids = TypeDocument::where('description', 'LIKE', '%' . $request->search_type . '%')->pluck('id')->toArray();
+            }
+            
+            if ($request->has('search_dt_init') || $request->has('search_dt_end')) {
+                $dt_init = $request->search_dt_init ?? '1970-01-01';
+                $dt_end = $request->search_dt_end ?? '2100-12-31';
+            }
+            
+            if (!empty($type_document_ids) || !empty($dt_init) || !empty($dt_end)) {
+                $launchs = Launch::whereIn('type_document_id', $type_document_ids)->
+                    whereBetween('date_document', [$dt_init, $dt_end])->paginate(25);
+            } else {
+                $launchs = Launch::latest()->paginate(25);
+            }
+
+            
         } else {
             $user_id = \Auth::user()->id;
             $lauchnsUsers = LaunchUser::where('user_id', $user_id)->pluck('launch_id')->toArray();
-            $launchs = Launch::whereIn('id', $lauchnsUsers)->paginate(5);
-        }        
+            $lauchnsGroups = LaunchGroup::where('group_id', \Auth::user()->group_id)->pluck('launch_id')->toArray();
+
+            $type_document_ids = null;
+            $dt_init = null;
+            $dt_end = null;
+
+            if ($request->has('search_type')) {
+                $type_document_ids = TypeDocument::where('description', 'LIKE', '%' . $request->search_type . '%')->pluck('id')->toArray();
+            }
+            
+            if ($request->has('search_dt_init') || $request->has('search_dt_end')) {
+                $dt_init = $request->search_dt_init ?? '1970-01-01';
+                $dt_end = $request->search_dt_end ?? '2100-12-31';
+            }
+
+            if (!empty($type_document_ids) || !empty($dt_init) || !empty($dt_end)) {
+                $type_document_ids = TypeDocument::where('description', 'LIKE', '%' . $request->search_type . '%')->pluck('id')->toArray();
+
+                $launchs = Launch::whereIn('id', $lauchnsUsers)->
+                    orWhereIn('id', $lauchnsGroups)->
+                    whereIn('type_document_id', $type_document_ids)->
+                    whereBetween('date_document', [$dt_init, $dt_end])->paginate(25);
+
+            } else {
+                $launchs = Launch::whereIn('id', $lauchnsUsers)->
+                orWhereIn('id', $lauchnsGroups)->paginate(25);
+            }
+        }
   
         return view('launches.index',compact('launchs'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i', (request()->input('page', 1) - 1) * 25);
     }
 
     /**
@@ -46,7 +94,8 @@ class LaunchController extends Controller
         $type_documents = TypeDocument::all();
         $role_ids = Role::where('description', '<>', 'Root')->pluck('id')->toArray();
         $users = User::whereIn('role_id', $role_ids)->get();
-        return view('launches.create', compact('type_documents', 'users'));
+        $groups = Group::all();
+        return view('launches.create', compact('type_documents', 'users', 'groups'));
     }
 
     /**
@@ -73,7 +122,8 @@ class LaunchController extends Controller
             'doc_file' => $path
         ]);
 
-        $insertUser->users()->attach($request['users']);        
+        $insertUser->users()->attach($request['users']);
+        $insertUser->groups()->attach($request['groups']);
    
         return redirect()->route('launches.index')
                         ->with('success', 'Lançamento criado com sucesso.');
@@ -87,8 +137,18 @@ class LaunchController extends Controller
      */
     public function show(Launch $launch)
     {
-        $url = Storage::url($launch->doc_file);
-        return view('launches.show', compact('launch', 'url'));
+
+        $lauchnsUsers = LaunchUser::whereLaunchId($launch->id)->whereUserId(\Auth::user()->id)->count();
+        $lauchnsGroups = LaunchGroup::whereLaunchId($launch->id)->whereGroupId(\Auth::user()->group_id)->count();
+
+        if ($lauchnsUsers > 0 || $lauchnsGroups > 0) {
+            $url = Storage::url($launch->doc_file);
+            return view('launches.show', compact('launch', 'url'));
+        } else {
+            return redirect()->route('launches.index')
+                        ->with('danger','Você não tem permissão para ver esse Lançamento.');
+        }
+        
     }
 
     /**

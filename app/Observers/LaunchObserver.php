@@ -7,6 +7,7 @@ use App\Launch;
 use App\LaunchUser;
 use App\User;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Arr;
 
 class LaunchObserver
 {
@@ -24,17 +25,32 @@ class LaunchObserver
 
     public function sendEmail(Launch $launch)
     {    
-
-        $launchs_users = LaunchUser::whereRaw('launch_id', $launch->id)->get();
-        
         $user_list = [];
-        foreach ($launchs_users as $key => $launch_user) {
-            $user = User::findOrFail($launch_user->user_id);
+
+        $launchs_users = User::whereIn('id', request()->users)->get();        
+        $launchs_groups = request()->groups;
+
+        $launchs_group_users = User::whereIn('group_id', $launchs_groups)->get();
+
+        if (count($launchs_users) > 0) {
+            if (count($launchs_group_users) > 0) {
+                $user_list = Arr::collapse($launchs_users, $launchs_group_users);
+            } else {
+                $user_list = $launchs_users;
+            }
+            
+        } else if (count($launchs_group_users) > 0){
+            $user_list = $launchs_group_users;
+        } else {
+            $user_list = User::all();
+        }
+        
+        foreach ($user_list as $key => $user) {
 
             try {
-                Mail::to($user->email)->queue(new LaunchMail($launch));
+                Mail::to($user->email)->send(new LaunchMail($launch));
             } catch (\Throwable $th) {
-                return;
+                return response($th->getMessage(), 422);
             }            
         }
         

@@ -91,6 +91,17 @@
                         </select>
                     </label>
                 </div>
+                <div class="col-lg-6 col-md-12">
+                    <label class="form-label-wrapper">
+                        <p class="form-label">{{ __('Grupo(s):') }}</p>
+                        <select name="groups[]" id="groups" class="form-select" multiple>
+                            <option value="" selected><-- Selecione uma opção --></option>
+                            @foreach ($groups as $group)
+                                <option value="{{$group->id}}" @if(isset($launch)) @foreach($launch->groups as $g) @if($group->id == $g->id)selected='selected'@endif @endforeach @endif>{{$group->description}}</option>
+                            @endforeach
+                        </select>
+                    </label>
+                </div>
             </div>
             <div class="row" style="margin-top: 1em;">
                 <div class="col-12 text-center">

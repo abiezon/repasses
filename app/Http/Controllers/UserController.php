@@ -18,21 +18,27 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (!Gate::allows('isAdmin')) {
             return abort('403');
         }
 
         if (Gate::allows('isSuperAdmin')) {
-            $users = User::latest()->paginate(5);
+            $users = User::latest()->paginate(25);
         } else {
             $roles = Role::where('description', '<>', 'Root')->pluck('id')->toArray();
-            $users = User::whereIn('role_id', $roles)->paginate(5);
+
+            if ($request->has('search_email')) {
+                $users = User::whereIn('role_id', $roles)->
+                    where('email', 'LIKE', '%' . $request->search_email . '%')->paginate(25);
+            } else {
+                $users = User::whereIn('role_id', $roles)->paginate(25);
+            }
         }
 
         return view('users.index',compact('users'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i', (request()->input('page', 1) - 1) * 25);
     }
 
     /**

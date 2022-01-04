@@ -11,6 +11,15 @@
 @endif
 
 <div class="stat-cards-item users-table table-wrapper">
+    <div class="col">
+        <div class="float-end">
+            <form action="{{ route('users.index') }}" method="GET" class=" form-inline">
+                <input type="text" class="search-wrapper" name="search_email" placeholder="Digite o e-mail" />
+                <button type="submit" class="btn  btn-outline-primary btn-block"><i data-feather="search" aria-hidden="true"></i> Buscar</button>
+            </form>
+        </div>
+    </div>
+       
     <table class="table">
         <thead>
           <tr>

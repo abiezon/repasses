@@ -33,4 +33,9 @@ class Launch extends Model
     {
         return $this->belongsToMany('App\User', 'launches_users', 'launch_id', 'user_id')->withTimestamps();
     }
+
+    public function groups()
+    {
+        return $this->belongsToMany('App\Group', 'launches_groups', 'launch_id', 'group_id')->withTimestamps();
+    }
 }

@@ -13,6 +13,11 @@
     <!-- CSS only -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <!-- CSS only -->
+    <script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
 </head>
 <body>
     <div class="layer"></div>
@@ -166,9 +171,16 @@
                             <div class="nav-user-wrapper">
                             <button href="##" class="nav-user-btn dropdown-btn" title="{{Auth::user()->name}}" type="button">
                                 <span class="sr-only">{{Auth::user()->name}}</span>
-                                <span class="nav-user-img">
-                                    <picture><source srcset="/img/avatar/avatar-illustrated-02.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-02.png" alt="User name"></picture>
-                                </span>
+
+                                @if(Auth::user()->photo)
+                                    <span class="nav-user-img">
+                                        <picture><source srcset="{{Storage::url(Auth::user()->photo)}}" type="image/webp"><img src="{{Storage::url(Auth::user()->photo)}}" alt="User name"></picture>
+                                    </span>
+                                @else
+                                    <span class="nav-user-img">
+                                        <picture><source srcset="/img/avatar/avatar-illustrated-02.webp" type="image/webp"><img src="./img/avatar/avatar-illustrated-02.png" alt="User name"></picture>
+                                    </span>
+                                @endif                                
                             </button>
                             <ul class="users-item-dropdown nav-user-dropdown dropdown">
                                 <li><a href="/users/{{Auth::user()->id}}">

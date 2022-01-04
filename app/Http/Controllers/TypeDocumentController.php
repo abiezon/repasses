@@ -19,10 +19,10 @@ class TypeDocumentController extends Controller
             return abort('403');
         }
 
-        $type_documents = TypeDocument::latest()->paginate(5);
+        $type_documents = TypeDocument::latest()->paginate(25);
   
         return view('type-documents.index',compact('type_documents'))
-            ->with('i', (request()->input('page', 1) - 1) * 5);
+            ->with('i', (request()->input('page', 1) - 1) * 25);
     }
 
     /**
