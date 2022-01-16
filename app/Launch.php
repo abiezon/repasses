@@ -38,4 +38,48 @@ class Launch extends Model
     {
         return $this->belongsToMany('App\Group', 'launches_groups', 'launch_id', 'group_id')->withTimestamps();
     }
+
+    public function hasUser($launch_id)
+    {        
+        if (empty($launch_id)) {
+            return;
+        }
+        
+        $users_launch = LaunchUser::where('launch_id', $launch_id)->pluck('user_id')->toArray();
+        
+        if (empty($users_launch)) {
+            return;
+        }
+
+        $users = User::whereIn('id', $users_launch)->get();
+
+        $names = '';
+        foreach ($users as $key => $user) {
+            $names .= "{$user->name} - {$user->email} \n";
+        }
+        
+        return nl2br(e($names), false);
+
+    }
+
+    public function hasGroup($launch_id)
+    {        
+        if (empty($launch_id)) {
+            return;
+        }
+        $groups_launch = LaunchGroup::where('launch_id', $launch_id)->pluck('group_id')->toArray();
+
+        if (empty($groups_launch)) {
+            return ;
+        }
+
+        $groups = Group::whereIn('id', $groups_launch)->get();
+
+        $names = '';
+        foreach ($groups as $key => $group) {
+            $names .= "{$group->cod_group} - {$group->description} \n";
+        }
+
+        return nl2br(e($names), false);
+    }
 }

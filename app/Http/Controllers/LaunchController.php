@@ -141,12 +141,11 @@ class LaunchController extends Controller
         $lauchnsUsers = LaunchUser::whereLaunchId($launch->id)->whereUserId(\Auth::user()->id)->count();
         $lauchnsGroups = LaunchGroup::whereLaunchId($launch->id)->whereGroupId(\Auth::user()->group_id)->count();
 
-        if ($lauchnsUsers > 0 || $lauchnsGroups > 0) {
+        if ($lauchnsUsers > 0 || $lauchnsGroups > 0 || Gate::allows('isAdmin')) {
             $url = Storage::url($launch->doc_file);
             return view('launches.show', compact('launch', 'url'));
         } else {
-            return redirect()->route('launches.index')
-                        ->with('danger','Você não tem permissão para ver esse Lançamento.');
+            return abort('403');
         }
         
     }
@@ -210,5 +209,61 @@ class LaunchController extends Controller
 
         return redirect()->route('launches.index')
                         ->with('success','Lançamento apagado com sucesso.');
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function reports(Request $request)
+    { 
+        if (Gate::allows('isAdmin')) {          
+
+            return view('launches.reports');
+            
+        } else {
+            return abort('403');
+        }
+  
+        
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function report(Request $request)
+    { 
+        if (Gate::allows('isAdmin')) {
+            $type_document_ids = null;
+            $dt_init = null;
+            $dt_end = null;
+
+            if ($request->has('search_type')) {
+                $type_document_ids = TypeDocument::where('description', 'LIKE', '%' . $request->search_type . '%')->pluck('id')->toArray();
+            }
+            
+            if ($request->has('search_dt_init') || $request->has('search_dt_end')) {
+                $dt_init = $request->search_dt_init ?? '1970-01-01';
+                $dt_end = $request->search_dt_end ?? '2100-12-31';
+            }
+            
+            if (!empty($type_document_ids) || !empty($dt_init) || !empty($dt_end)) {
+                $launchs = Launch::whereIn('type_document_id', $type_document_ids)->
+                    whereBetween('date_document', [$dt_init, $dt_end])->paginate(25);
+            } else {
+                $launchs = Launch::latest()->paginate(25);
+            }
+
+            return view('launches.report',compact('launchs'))
+            ->with('i', (request()->input('page', 1) - 1) * 25);
+            
+        } else {
+            return abort('403');
+        }
+  
+        
     }
 }

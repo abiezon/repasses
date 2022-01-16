@@ -27,10 +27,12 @@ Route::get('/home', 'HomeController@index')->name('home')->middleware('auth');
 Route::get('/users/create', 'UserController@create')->middleware('can:isAdmin')->name('users.create');
 Route::get('/users', 'UserController@index')->middleware('can:isAdmin')->name('users.index');
 Route::get('/users/{id}', 'UserController@show')->middleware('auth')->name('users.show');
-// Route::get('/launches', 'LaunchController@index')->middleware('auth')->name('launches.index');
+Route::get('/report', 'LaunchController@report')->middleware('auth')->name('launches.report');
 // Route::get('/launches/{id}', 'LaunchController@show')->middleware('auth')->name('launches.show');
 // Route::get('/launches/edit/{id}', 'LaunchController@edit')->middleware('can:isSuperAdmin')->name('launches.edit');
 // Route::get('/launches/create', 'LaunchController@create')->middleware('can:isAdmin')->name('launches.create');
 // Route::get('/launches/destroy', 'LaunchController@destroy')->middleware('can:isAdmin')->name('launches.destroy');
+
+Route::get('/reports', 'LaunchController@reports')->name('reports');
 
 
