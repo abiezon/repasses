@@ -37,8 +37,11 @@ class LaunchController extends Controller
             }
             
             if (!empty($type_document_ids) || !empty($dt_init) || !empty($dt_end)) {
+                if(empty($type_document_ids))
+                    $type_document_ids = TypeDocument::all()->pluck('id')->toArray();
+                    
                 $launchs = Launch::whereIn('type_document_id', $type_document_ids)->
-                    whereBetween('date_document', [$dt_init, $dt_end])->paginate(25);
+                    whereBetween('date_document', [$dt_init, $dt_end])->paginate(25)->withQueryString();
             } else {
                 $launchs = Launch::latest()->paginate(25);
             }
@@ -48,6 +51,8 @@ class LaunchController extends Controller
             $user_id = \Auth::user()->id;
             $lauchnsUsers = LaunchUser::where('user_id', $user_id)->pluck('launch_id')->toArray();
             $lauchnsGroups = LaunchGroup::where('group_id', \Auth::user()->group_id)->pluck('launch_id')->toArray();
+
+            $idLaunchs = array_merge($lauchnsUsers, $lauchnsGroups);
 
             $type_document_ids = null;
             $dt_init = null;
@@ -63,12 +68,14 @@ class LaunchController extends Controller
             }
 
             if (!empty($type_document_ids) || !empty($dt_init) || !empty($dt_end)) {
-                $type_document_ids = TypeDocument::where('description', 'LIKE', '%' . $request->search_type . '%')->pluck('id')->toArray();
 
-                $launchs = Launch::whereIn('id', $lauchnsUsers)->
-                    orWhereIn('id', $lauchnsGroups)->
+                if(empty($type_document_ids))
+                    $type_document_ids = TypeDocument::all()->pluck('id')->toArray();
+
+                $launchs = Launch::whereIn('id', $idLaunchs)->
                     whereIn('type_document_id', $type_document_ids)->
-                    whereBetween('date_document', [$dt_init, $dt_end])->paginate(25);
+                    whereBetween('date_document', [$dt_init, $dt_end])->paginate(25)->withQueryString();
+
 
             } else {
                 $launchs = Launch::whereIn('id', $lauchnsUsers)->
@@ -251,8 +258,11 @@ class LaunchController extends Controller
             }
             
             if (!empty($type_document_ids) || !empty($dt_init) || !empty($dt_end)) {
+                if(empty($type_document_ids))
+                    $type_document_ids = TypeDocument::all()->pluck('id')->toArray();
+
                 $launchs = Launch::whereIn('type_document_id', $type_document_ids)->
-                    whereBetween('date_document', [$dt_init, $dt_end])->paginate(25);
+                    whereBetween('date_document', [$dt_init, $dt_end])->paginate(25)->withQueryString();
             } else {
                 $launchs = Launch::latest()->paginate(25);
             }

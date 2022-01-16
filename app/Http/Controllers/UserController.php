@@ -31,9 +31,9 @@ class UserController extends Controller
 
             if ($request->has('search_email')) {
                 $users = User::whereIn('role_id', $roles)->
-                    where('email', 'LIKE', '%' . $request->search_email . '%')->paginate(25);
+                    where('email', 'LIKE', '%' . $request->search_email . '%')->paginate(25)->withQueryString();
             } else {
-                $users = User::whereIn('role_id', $roles)->paginate(25);
+                $users = User::whereIn('role_id', $roles)->paginate(25)->withQueryString();
             }
         }
 

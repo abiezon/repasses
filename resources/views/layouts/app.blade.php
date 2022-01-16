@@ -98,6 +98,9 @@
                                     <li>
                                         <a href="{{ route('launches.create') }}">Adicionar Novo</a>
                                     </li>
+                                    <li>
+                                        <a href="{{ route('reports') }}">Relatórios</a>
+                                    </li>
                                     @endcan
                                 </ul>
                             </li>
