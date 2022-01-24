@@ -54,6 +54,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Reset Password') }}
                                 </button>
+                                <a href="/login" class="btn btn-danger" title="Home">Cancelar</a>
                             </div>
                         </div>
                     </form>

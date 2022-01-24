@@ -222,7 +222,7 @@
                 <footer class="footer">
                     <div class="container footer--flex">
                         <div class="footer-start">
-                            <p>2021 © Repasses</p>
+                            <p>{{ now()->year }} © {{ env('NAME_COPYWRYTER') }}</p>
                         </div>
                     </div>
                 </footer>
